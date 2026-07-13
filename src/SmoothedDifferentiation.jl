@@ -5,15 +5,16 @@ using Reexport
 import XAIBase: call_analyzer
 
 using Base.Iterators
-using Distributions: Distribution, Sampleable, Normal
+using Distributions: Sampleable, Normal
 using Random: AbstractRNG, GLOBAL_RNG, rand!
 using ProgressMeter: Progress, next!
 
-using NNlib: relu, ∇maxpool, maxpool, upsample_nearest, σ, softplus
+using NNlib: relu, ∇maxpool, maxpool, upsample_nearest, σ
 using Zygote: pullback
 import ChainRulesCore: rrule, NoTangent, unthunk
 
 using Flux: Flux
+using Optimisers: Optimisers
 
 include("prepare_model.jl")
 include("vejp/relu.jl")
@@ -27,7 +28,7 @@ mytestmode!(model) = model
 mytestmode!(model::Flux.Chain) = Flux.testmode!(model)
 
 
-samplingmode!(model, mode::Bool) = foreach(x -> samplingmode!(x, mode), Flux.trainable(model))
+samplingmode!(model, mode::Bool) = foreach(x -> samplingmode!(x, mode), Optimisers.trainable(model))
 
 ## Interface
 const DEFAULT_SAMPLES = 50
