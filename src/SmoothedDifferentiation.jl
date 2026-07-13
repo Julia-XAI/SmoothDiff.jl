@@ -5,11 +5,11 @@ using Reexport
 import XAIBase: call_analyzer
 
 using Base.Iterators
-using Distributions: Distribution, Sampleable, Normal
+using Distributions: Sampleable, Normal
 using Random: AbstractRNG, GLOBAL_RNG, rand!
 using ProgressMeter: Progress, next!
 
-using NNlib: relu, ∇maxpool, maxpool, upsample_nearest, σ, softplus
+using NNlib: relu, ∇maxpool, maxpool, upsample_nearest, σ
 using Zygote: pullback
 import ChainRulesCore: rrule, NoTangent, unthunk
 
