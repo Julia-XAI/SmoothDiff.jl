@@ -1,14 +1,10 @@
 using SmoothedDifferentiation
 using Test
-using Aqua
-using JET
 
 @testset "SmoothedDifferentiation.jl" begin
-    @testset "Code quality (Aqua.jl)" begin
-        Aqua.test_all(SmoothedDifferentiation)
-    end
-    @testset "Code linting (JET.jl)" begin
-        JET.test_package(SmoothedDifferentiation; target_defined_modules = true)
+    @testset verbose = true "Linting" begin
+        @info "Running linting tests..."
+        include("linting.jl")
     end
 
     @testset "VEJP numerical tests" begin
