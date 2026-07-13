@@ -7,3 +7,7 @@
 Julia reference implementation of SmoothDiff for the NeurIPS 2025 paper *"Smoothed Differentiation Efficiently Mitigates Shattered Gradients in Explanations"*.
 
 The full experiments can be found here: https://github.com/adrhill/smoothdiff-experiments/
+
+## Acknowledgements
+
+Adrian Hill gratefully acknowledges funding from the German Federal Ministry of Education and Research under the grant BIFOLD26B.
