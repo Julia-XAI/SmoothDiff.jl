@@ -7,6 +7,10 @@ using Test
         include("linting.jl")
     end
 
+    @testset "Constructors" begin
+        include("test_constructors.jl")
+    end
+
     @testset "VEJP numerical tests" begin
         include("test_vejp.jl")
     end
