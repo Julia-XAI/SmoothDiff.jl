@@ -25,6 +25,6 @@ end
 if VERSION >= v"1.12"
     @testset "JET.jl" begin
         @info "Running JET.jl type-stability tests."
-        JET.test_package(SmoothedDifferentiation; target_defined_modules = true)
+        JET.test_package(SmoothedDifferentiation; target_modules = (SmoothedDifferentiation,))
     end
 end
