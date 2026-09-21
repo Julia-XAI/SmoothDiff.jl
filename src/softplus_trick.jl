@@ -75,7 +75,5 @@ function call_analyzer(
     _, back = pullback(model, input) # create Jacobian operator (aka "VJP function")
     val = only(back(v)) # evaluate VJP
 
-    return Explanation(
-        val, input, output, output_selection, :SoftPlus, :sensitivity, nothing
-    )
+    return Attribution(val, input, output, output_selection, NormPooling())
 end

@@ -95,9 +95,7 @@ function call_analyzer(
     v[output_selection] .= 1
     val = only(vejp_fn(v))
 
-    return Explanation(
-        val, input, output, output_selection, :SmoothDiff, :sensitivity, nothing
-    )
+    return Attribution(val, input, output, output_selection, NormPooling())
 end
 
 function prepare_vejp(input, method::SmoothDiff)

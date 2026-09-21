@@ -25,21 +25,21 @@ analyzer_gpu = SmoothDiff(model_gpu, input_gpu, 5)
 softplus_analyzer_gpu = SoftPlusTrick(model_gpu, 1.0f0)
 
 @testset "Run analyzer (CPU)" begin
-    expl = analyze(input, analyzer)
-    @test expl isa Explanation
+    attr = analyze(input, analyzer)
+    @test attr isa Attribution
 end
 
 @testset "Run analyzer (GPU)" begin
-    expl = analyze(input_gpu, analyzer_gpu)
-    @test expl isa Explanation
+    attr = analyze(input_gpu, analyzer_gpu)
+    @test attr isa Attribution
 end
 
 @testset "Run softplus analyzer (CPU)" begin
-    expl = analyze(input, softplus_analyzer)
-    @test expl isa Explanation
+    attr = analyze(input, softplus_analyzer)
+    @test attr isa Attribution
 end
 
 @testset "Run softplus analyzer (GPU)" begin
-    expl = analyze(input_gpu, softplus_analyzer_gpu)
-    @test expl isa Explanation
+    attr = analyze(input_gpu, softplus_analyzer_gpu)
+    @test attr isa Attribution
 end

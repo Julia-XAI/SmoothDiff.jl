@@ -7,15 +7,15 @@ using MLUtils: flatten
 using Metalhead: Metalhead
 using SmoothedDifferentiation: ReluAccumulator, MaxPoolAccumulator
 using Random
-using XAIBase: Explanation
+using XAIBase: Attribution
 
 model = Metalhead.VGG(11)
 input = rand(Float32, 224, 224, 3, 1)
 analyzer = SmoothDiff(model, input, 5)
 
 @testset "Dry-run" begin
-    expl = analyze(input, analyzer)
-    @test expl isa Explanation
+    attr = analyze(input, analyzer)
+    @test attr isa Attribution
 end
 
 @testset "Prepare model" begin
