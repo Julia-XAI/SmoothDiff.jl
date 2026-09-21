@@ -34,6 +34,25 @@ samplingmode!(model, mode::Bool) = foreach(x -> samplingmode!(x, mode), Optimise
 const DEFAULT_SAMPLES = 50
 const DEFAULT_DISTR = Normal(0.0f0, 1.0f0)
 
+"""
+    SmoothDiff(model, input)
+    SmoothDiff(model, input, [n, std, rng, show_progress])
+    SmoothDiff(model, input, [n, distribution, rng, show_progress])
+
+Analyze `model` by computing a smoothed sensitivity map via *Smoothed Differentiation*.
+Defaults to `n = $DEFAULT_SAMPLES` samples from the normal distribution with zero mean and `std = 1.0f0`.
+
+The `input` is required at construction time to prepare (`ReLU`/`MaxPool`-accumulating) copies of the model's layers.
+
+## Arguments
+- `n::Int`: Number of noise samples. Defaults to `$DEFAULT_SAMPLES`.
+- `std::Real` / `distribution::Sampleable`: Either the standard deviation of a zero-mean
+  normal distribution, or an arbitrary scalar `distribution` to sample additive noise from.
+  Defaults to `Normal(0.0f0, 1.0f0)`.
+- `rng::AbstractRNG`: Random number generator used to sample noise from the `distribution`.
+  Defaults to `GLOBAL_RNG`.
+- `show_progress::Bool`: Show a progress meter while sampling. Defaults to `true`.
+"""
 struct SmoothDiff{M, D <: Sampleable, R <: AbstractRNG} <: AbstractXAIMethod
     model::M
     n::Int
@@ -49,6 +68,7 @@ struct SmoothDiff{M, D <: Sampleable, R <: AbstractRNG} <: AbstractXAIMethod
             rng::R = GLOBAL_RNG,
             show_progress = true,
         ) where {D <: Sampleable, R <: AbstractRNG}
+        n < 1 && throw(ArgumentError("Number of samples `n` needs to be larger than zero."))
         prepared_model = prepare(model, input)
         mytestmode!(prepared_model)
         return new{typeof(prepared_model), D, R}(
@@ -57,7 +77,7 @@ struct SmoothDiff{M, D <: Sampleable, R <: AbstractRNG} <: AbstractXAIMethod
     end
 end
 
-# Default to sampling from Normal distribution
+# Convenience constructor: sample from a zero-mean normal distribution with standard deviation `std`
 function SmoothDiff(model, input, n::Int, std::Real, rng = GLOBAL_RNG, show_progress = true)
     T = eltype(input)
     distribution = Normal(zero(T), convert(T, std))
