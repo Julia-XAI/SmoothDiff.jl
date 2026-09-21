@@ -11,6 +11,10 @@ using Test
         include("test_constructors.jl")
     end
 
+    @testset "XAIBase interface" begin
+        include("test_interface.jl")
+    end
+
     @testset "VEJP numerical tests" begin
         include("test_vejp.jl")
     end

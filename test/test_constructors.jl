@@ -5,7 +5,7 @@ using Flux: Flux
 using NNlib: relu
 using Distributions: Normal, Uniform, Laplace
 using Random: MersenneTwister
-using XAIBase: Explanation
+using XAIBase: Attribution
 
 model = Flux.Chain(Flux.Dense(10 => 32, relu), Flux.Dense(32 => 5))
 input = rand(Float32, 10, 4)
@@ -44,9 +44,9 @@ end
     for distribution in (Normal(0.0f0, 0.5f0), Uniform(-0.1f0, 0.1f0), Laplace(0.0f0, 0.2f0))
         analyzer = SmoothDiff(model, input, 5, distribution, MersenneTwister(1), false)
         @test analyzer.distribution === distribution
-        expl = analyze(input, analyzer)
-        @test expl isa Explanation
-        @test size(expl.val) == size(input)
+        attr = analyze(input, analyzer)
+        @test attr isa Attribution
+        @test size(attr.val) == size(input)
     end
 end
 
