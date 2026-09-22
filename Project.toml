@@ -1,7 +1,7 @@
 name = "SmoothedDifferentiation"
 uuid = "1059cf8c-97d7-4ea5-b71f-68a0f14697c4"
 authors = ["Anonymous"]
-version = "0.2.0-DEV"
+version = "0.2.0"
 
 [deps]
 ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
